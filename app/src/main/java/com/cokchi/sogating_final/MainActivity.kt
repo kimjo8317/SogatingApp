@@ -1,46 +1,59 @@
 package com.cokchi.sogating_final
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.cokchi.sogating_final.ui.theme.Sogating_finalTheme
+import android.view.View
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager
+import com.yuyakaido.android.cardstackview.CardStackListener
+import com.yuyakaido.android.cardstackview.CardStackView
+import com.yuyakaido.android.cardstackview.Direction
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
+    lateinit var aCardStackAdapter : CardStackAdapter
+    lateinit var manager : CardStackLayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Sogating_finalTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+        setContentView(R.layout.activity_main)
+
+        val cardStackView = findViewById<CardStackView>(R.id.cardStackView)
+
+        manager = CardStackLayoutManager(baseContext, object : CardStackListener {
+            override fun onCardDragging(direction: Direction?, ratio: Float) {
+
             }
-        }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+            override fun onCardSwiped(direction: Direction?) {
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Sogating_finalTheme {
-        Greeting("Android")
+            }
+
+            override fun onCardRewound() {
+
+            }
+
+            override fun onCardCanceled() {
+
+            }
+
+            override fun onCardAppeared(view: View?, position: Int) {
+
+            }
+
+            override fun onCardDisappeared(view: View?, position: Int) {
+
+            }
+
+        })
+
+        val testList = mutableListOf<String>()
+        testList.add("a")
+        testList.add("b")
+        testList.add("c")
+
+        aCardStackAdapter = CardStackAdapter(baseContext, testList)
+        cardStackView.layoutManager = manager
+        cardStackView.adapter = aCardStackAdapter
+
     }
 }

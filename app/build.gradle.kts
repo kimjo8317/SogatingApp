@@ -66,4 +66,16 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("com.yuyakaido.android:card-stack-view:2.3.4")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0")
+
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    implementation ("androidx.appcompat:appcompat:1.1.0")
+
+
+
+
+
+
 }
