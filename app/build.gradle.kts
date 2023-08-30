@@ -70,7 +70,8 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
     implementation("androidx.cardview:cardview:1.0.0") // 버전은 최신 버전으로 업데이트해주세요
 
-
+    // Material Components 라이브러리 추가
+    implementation ("com.google.android.material:material:1.5.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation ("androidx.appcompat:appcompat:1.1.0")

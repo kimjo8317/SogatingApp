@@ -12,11 +12,9 @@
 
         <ImageView
             android:id="@+id/profileImageArea"
-            android:src="@drawable/no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
-
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:src="@drawable/no" />
 
         <TextView
             android:text="Name"
@@ -48,7 +46,7 @@
     </LinearLayout>
 
     <FrameLayout
-        android:id="@+id/left_overlay"
+        android:id="@id/left_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -57,12 +55,10 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"/>
-
-
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/right_overlay"
+        android:id="@id/right_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -71,8 +67,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"/>
-
-
     </FrameLayout>
+
 
 </androidx.cardview.widget.CardView>
