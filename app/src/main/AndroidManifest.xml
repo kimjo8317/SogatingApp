@@ -13,7 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Sogating_Final"
         tools:targetApi="31">
-
+        <activity
+            android:name=".auth.IntroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".auth.SplashActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -21,13 +26,10 @@
             android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <!-- 다른 액티비티, 서비스, 리시버 등을 여기에 추가할 수 있습니다. -->
-
     </application>
 
 </manifest>
