@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Sogating_Final">
 
         <activity
+            android:name=".MainActivity" />
+
+        <activity
             android:name=".auth.LoginActivity"
             android:exported="false" />
         <activity android:name=".auth.IntroActivity" />
@@ -31,6 +34,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
     </application>
 
 </manifest>

@@ -34,7 +34,8 @@ class JoinActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success")
-                        // val user = auth.currentUser
+                         val user = auth.currentUser
+                        Log.d(TAG, user?.uid.toString())
                         // updateUI(user)
                     } else {
                         // If sign in fails, display a message to the user.
