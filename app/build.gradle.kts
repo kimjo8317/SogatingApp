@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -37,6 +38,8 @@ android {
         jvmTarget = "17"
     }
     buildFeatures {
+        viewBinding = true // View Binding 사용 설정
+        dataBinding = true // Data Binding 사용 설정 추가
         compose = true
     }
     composeOptions {
@@ -48,6 +51,8 @@ android {
         }
     }
 }
+
+
 
 dependencies {
 
@@ -75,6 +80,13 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     implementation ("androidx.appcompat:appcompat:1.1.0")
+
+    //파이어베이스추가
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    //파이어베이스인증
+    implementation("com.google.firebase:firebase-auth-ktx")
+
 
 
 
