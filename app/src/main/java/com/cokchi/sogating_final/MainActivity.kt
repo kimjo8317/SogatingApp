@@ -38,9 +38,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 다른 성별 유저받아오기
-        // 1. 나의 성별을 알고
-        // 2. 전체 유저 중 다른 성별 가져오기
+    //내가(B) A를 좋아하는데 A의 좋아요 리스트에 내가(B) 있는지 확인하면됨
 
         val setting = findViewById<ImageView>(R.id.settingIcon)
         setting.setOnClickListener {
@@ -59,14 +57,14 @@ class MainActivity : AppCompatActivity() {
             override fun onCardSwiped(direction: Direction?) {
 
                 if (direction == Direction.Right) {
-                    Toast.makeText(this@MainActivity, "right", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@MainActivity, "right", Toast.LENGTH_SHORT).show()
                     //현재유저의 UID값을 로그찍어보기
-                    Log.d(TAG, usersDataList[userCount].uid.toString())
+//                    Log.d(TAG, usersDataList[userCount].uid.toString())
 
                     userLikeOtherUser(uid, usersDataList[userCount].uid.toString())
                 }
                 if (direction == Direction.Left) {
-                    Toast.makeText(this@MainActivity, "left", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@MainActivity, "left", Toast.LENGTH_SHORT).show()
                 }
 
                 userCount = userCount + 1
@@ -158,5 +156,31 @@ class MainActivity : AppCompatActivity() {
     //나의 UID 값, 좋아요한 사람의 UID값
     private fun userLikeOtherUser(myUid : String, otherUid : String) {
         FirebaseRef.userLikeRef.child(myUid).child(otherUid).setValue("true")
+        getOtherUserLikeList(otherUid)
     }
+
+    //내가 좋아요한사람이 누구를 좋아요 했는지 알수있음
+    private fun getOtherUserLikeList(otherUid: String) {
+
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                //여기 리스트안에서 나의 UID가 있는지 확인
+                for (dataModel in dataSnapshot.children) {
+                    val likeUserKey = dataModel.key.toString()
+                    if (likeUserKey.equals(uid)) {
+                        Toast.makeText(this@MainActivity, "매칭 완료", Toast.LENGTH_SHORT)
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+
+        FirebaseRef.userLikeRef.child(otherUid).addValueEventListener(postListener)
+    }
+
 }
+
