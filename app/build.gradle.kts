@@ -92,6 +92,13 @@ dependencies {
     //파이어베이스 DB SDK추가
     implementation("com.google.firebase:firebase-database-ktx")
 
+    //파이어베이스 스토리지사용
+    implementation("com.google.firebase:firebase-storage-ktx")
+
+    //Glide사용
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+
 
 
 
