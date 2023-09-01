@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cokchi.sogating_final">
-
-<!--    Glide 사용로직-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Glide 사용로직 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,30 +14,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sogating_Final">
-
         <activity
-            android:name=".MainActivity" />
-
+            android:name=".setting.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".setting.MyPageActivity"
+            android:exported="false" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".auth.LoginActivity"
             android:exported="false" />
         <activity android:name=".auth.IntroActivity" />
-
-        <activity
-            android:name=".auth.JoinActivity" /> <!-- JoinActivity 추가 -->
-
+        <activity android:name=".auth.JoinActivity" /> <!-- JoinActivity 추가 -->
         <activity
             android:name=".auth.SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>

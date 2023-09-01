@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import com.cokchi.sogating_final.auth.IntroActivity
 import com.cokchi.sogating_final.auth.UserDataModel
+import com.cokchi.sogating_final.setting.SettingActivity
 import com.cokchi.sogating_final.utils.FirebaseRef
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -33,12 +34,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //로그아웃기능
         val setting = findViewById<ImageView>(R.id.settingIcon)
         setting.setOnClickListener {
-            val auth = Firebase.auth.signOut()
 
-            val intent = Intent(this, IntroActivity::class.java)
+            val intent = Intent(this, SettingActivity::class.java)
             startActivity(intent)
         }
 
@@ -83,6 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     //회원정보 받아오기
     private fun getUserDataList(){
+
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataModel in dataSnapshot.children) {
