@@ -98,6 +98,10 @@ dependencies {
     //Glide사용
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
+    //Notifucation 추가
+    implementation ("com.android.support:support-compat:28.0.0")
+
+
 
 
 

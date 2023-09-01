@@ -1,12 +1,18 @@
 package com.cokchi.sogating_final
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.cokchi.sogating_final.auth.UserDataModel
 import com.cokchi.sogating_final.setting.SettingActivity
 import com.cokchi.sogating_final.utils.FirebaseAuthUtils
@@ -128,6 +134,7 @@ class MainActivity : AppCompatActivity() {
     // 회원 정보 받아오기
     private fun getUserDataList(currentUserGender: String) {
         val postListener = object : ValueEventListener {
+
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (dataModel in dataSnapshot.children) {
                     val user = dataModel.getValue(UserDataModel::class.java)
@@ -168,7 +175,11 @@ class MainActivity : AppCompatActivity() {
                 for (dataModel in dataSnapshot.children) {
                     val likeUserKey = dataModel.key.toString()
                     if (likeUserKey.equals(uid)) {
-                        Toast.makeText(this@MainActivity, "매칭 완료", Toast.LENGTH_SHORT)
+                        Toast.makeText(this@MainActivity, "매칭 완료", Toast.LENGTH_SHORT).show()
+
+                        //매칭완료됬을때 노티피케이션알림
+                        createNotificationChannel()
+                        sendNotification()
                     }
                 }
             }
@@ -182,5 +193,33 @@ class MainActivity : AppCompatActivity() {
         FirebaseRef.userLikeRef.child(otherUid).addValueEventListener(postListener)
     }
 
-}
+    //Notification기능
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "name"
+            val descriptionText = "description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel("Test_Channel", name, importance).apply {
+                description = descriptionText
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
+    //NOtification 기본알림기능
+    private fun sendNotification(){
+        var builder = NotificationCompat.Builder(this, "Test_Channel")
+            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setContentTitle("매칭완료")
+            .setContentText("매칭이 완료되었습니다 서로 좋아해요!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        with(NotificationManagerCompat.from(this)){
+            notify(123, builder.build())
+        }
+    }
+}
