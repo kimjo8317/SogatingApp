@@ -80,6 +80,7 @@
                 android:layout_margin="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/nicknameArea"
                     android:hint="닉네임"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -94,6 +95,7 @@
                 android:layout_margin="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/genderArea"
                     android:hint="성별(M/W)"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -108,6 +110,7 @@
                 android:layout_margin="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cityArea"
                     android:hint="지역"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -122,6 +125,7 @@
                 android:layout_margin="10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ageArea"
                     android:hint="나이"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

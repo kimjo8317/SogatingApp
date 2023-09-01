@@ -87,6 +87,10 @@ dependencies {
     //파이어베이스인증
     implementation("com.google.firebase:firebase-auth-ktx")
 
+    //파이어베이스 DB SDK추가
+    implementation("com.google.firebase:firebase-database-ktx")
+
+
 
 
 
