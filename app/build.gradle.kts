@@ -73,7 +73,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("com.yuyakaido.android:card-stack-view:2.3.4")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
-    implementation("androidx.cardview:cardview:1.0.0") // 버전은 최신 버전으로 업데이트해주세요
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation ("androidx.fragment:fragment:1.3.4")
+
 
     // Material Components 라이브러리 추가
     implementation ("com.google.android.material:material:1.5.0")
@@ -89,6 +91,8 @@ dependencies {
 
     //파이어베이스 DB SDK추가
     implementation("com.google.firebase:firebase-database-ktx")
+
+
 
 
 

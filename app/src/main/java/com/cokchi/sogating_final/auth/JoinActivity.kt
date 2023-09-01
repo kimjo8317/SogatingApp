@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import com.cokchi.sogating_final.R
 import com.cokchi.sogating_final.utils.FirebaseRef
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class JoinActivity : AppCompatActivity() {
@@ -24,15 +26,33 @@ class JoinActivity : AppCompatActivity() {
     private var age = ""
     private var uid = ""
 
+    lateinit var profileImage : ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join)
 
+        auth = Firebase.auth
+
+        profileImage = findViewById(R.id.imageArea)
+
+        //이미지등록,불러오기 로직
+        val getAction = registerForActivityResult(
+            ActivityResultContracts.GetContent(),
+            ActivityResultCallback { result ->
+                if (result != null) {
+                    profileImage.setImageURI(result)
+                }
+            }
+        )
+
+        profileImage.setOnClickListener {
+            getAction.launch("image/*")
+        }
+
         val joinBtn = findViewById<Button>(R.id.joinBtn) // 수정: joinBtn ID로 변경
         joinBtn.setOnClickListener {
-
-            auth = Firebase.auth
 
             val emailArea = findViewById<TextInputEditText>(R.id.emailArea) // 수정: emailArea ID로 변경
             val pwdArea = findViewById<TextInputEditText>(R.id.pwdArea) // 수정: pwdArea ID로 변경
