@@ -3,10 +3,16 @@ package com.cokchi.sogating_final
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.cokchi.sogating_final.auth.IntroActivity
+import com.cokchi.sogating_final.auth.UserDataModel
+import com.cokchi.sogating_final.utils.FirebaseRef
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -15,8 +21,13 @@ import com.yuyakaido.android.cardstackview.Direction
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var aCardStackAdapter : CardStackAdapter
+    lateinit var CardStackAdapter : CardStackAdapter
     lateinit var manager : CardStackLayoutManager
+
+    private val TAG = "MainActivity"
+
+    private val userDataList = mutableListOf<UserDataModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,14 +71,35 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        val testList = mutableListOf<String>()
-        testList.add("a")
-        testList.add("b")
-        testList.add("c")
 
-        aCardStackAdapter = CardStackAdapter(baseContext, testList)
+        CardStackAdapter = CardStackAdapter(baseContext, userDataList)
         cardStackView.layoutManager = manager
-        cardStackView.adapter = aCardStackAdapter
+        cardStackView.adapter = CardStackAdapter
+
+        //유저데이터를 리스트에 담음
+        getUserDataList()
+
+    }
+
+    //회원정보 받아오기
+    private fun getUserDataList(){
+        val postListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (dataModel in dataSnapshot.children) {
+
+                    val user = dataModel.getValue(UserDataModel::class.java)
+                    userDataList.add(user!!)
+                }
+                //데이터를 받아온뒤 다시한번 동기화
+                CardStackAdapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        FirebaseRef.userInfoRef.addValueEventListener(postListener)
 
     }
 }
