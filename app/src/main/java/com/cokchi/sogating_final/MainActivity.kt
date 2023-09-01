@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import com.cokchi.sogating_final.auth.IntroActivity
 import com.cokchi.sogating_final.auth.UserDataModel
 import com.cokchi.sogating_final.setting.SettingActivity
@@ -29,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     private val userDataList = mutableListOf<UserDataModel>()
 
+    private var userCount = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +53,22 @@ class MainActivity : AppCompatActivity() {
 
             override fun onCardSwiped(direction: Direction?) {
 
+                if (direction == Direction.Right) {
+                    Toast.makeText(this@MainActivity, "right", Toast.LENGTH_SHORT).show()
+                }
+                if (direction == Direction.Left) {
+                    Toast.makeText(this@MainActivity, "left", Toast.LENGTH_SHORT).show()
+                }
+
+                userCount = userCount + 1
+
+                if (userCount == userDataList.count()) {
+                    getUserDataList()
+                    Toast.makeText(this@MainActivity, "유저를 새롭게 받아오는중", Toast.LENGTH_LONG)
+                }
             }
+
+
 
             override fun onCardRewound() {
 
