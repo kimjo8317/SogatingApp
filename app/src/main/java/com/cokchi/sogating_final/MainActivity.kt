@@ -2,6 +2,7 @@ package com.cokchi.sogating_final
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -27,6 +28,7 @@ import com.yuyakaido.android.cardstackview.Direction
 
 class MainActivity : AppCompatActivity() {
 
+
     lateinit var cardStackAdapter: CardStackAdapter
     lateinit var manager: CardStackLayoutManager
 
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-    //내가(B) A를 좋아하는데 A의 좋아요 리스트에 내가(B) 있는지 확인하면됨
+        //내가(B) A를 좋아하는데 A의 좋아요 리스트에 내가(B) 있는지 확인하면됨
 
         val setting = findViewById<ImageView>(R.id.settingIcon)
         setting.setOnClickListener {
@@ -159,9 +161,10 @@ class MainActivity : AppCompatActivity() {
         FirebaseRef.userInfoRef.addValueEventListener(postListener)
     }
 
+
     //유저의 좋아요를 표시하는 로직
     //나의 UID 값, 좋아요한 사람의 UID값
-    private fun userLikeOtherUser(myUid : String, otherUid : String) {
+    private fun userLikeOtherUser(myUid: String, otherUid: String) {
         FirebaseRef.userLikeRef.child(myUid).child(otherUid).setValue("true")
         getOtherUserLikeList(otherUid)
     }
@@ -192,7 +195,6 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseRef.userLikeRef.child(otherUid).addValueEventListener(postListener)
     }
-
     //Notification기능
     private fun createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -201,7 +203,7 @@ class MainActivity : AppCompatActivity() {
             val name = "name"
             val descriptionText = "description"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("Test_Channel", name, importance).apply {
+            val channel = NotificationChannel("TestChannel", name, importance).apply {
                 description = descriptionText
             }
             // Register the channel with the system
@@ -212,14 +214,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     //NOtification 기본알림기능
-    private fun sendNotification(){
-        var builder = NotificationCompat.Builder(this, "Test_Channel")
+    private fun sendNotification() {
+        var builder = NotificationCompat.Builder(this, "TestChannel")
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle("매칭완료")
             .setContentText("매칭이 완료되었습니다 서로 좋아해요!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        with(NotificationManagerCompat.from(this)){
-            notify(123, builder.build())
+        try {
+            with(NotificationManagerCompat.from(this)){
+                notify(123, builder.build())
+            }
+        } catch (e: SecurityException) {
+            Log.e(TAG, "SecurityException: " + e.message)
         }
     }
 }
+

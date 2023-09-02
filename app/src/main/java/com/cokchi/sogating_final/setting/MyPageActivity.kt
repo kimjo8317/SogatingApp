@@ -10,6 +10,7 @@ import com.cokchi.sogating_final.R
 import com.cokchi.sogating_final.auth.UserDataModel
 import com.cokchi.sogating_final.utils.FirebaseAuthUtils
 import com.cokchi.sogating_final.utils.FirebaseRef
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -22,7 +23,7 @@ class MyPageActivity : AppCompatActivity() {
     private val uid = FirebaseAuthUtils.getUid()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mt_page)
+        setContentView(R.layout.activity_my_page)
 
         getMydata()
     }
@@ -39,28 +40,32 @@ class MyPageActivity : AppCompatActivity() {
 
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                 Log.d(TAG, dataSnapshot.toString())
 
-                //데이터스냅샷에 있는 데이터를 각각가져오기
+                // 데이터스냅샷에 있는 데이터를 가져오고, null 체크를 하여 안전하게 접근
                 val data = dataSnapshot.getValue(UserDataModel::class.java)
-                myUid.text = data!!.uid
-                myNickname.text = data!!.nickname
-                myAge.text = data!!.age
-                myCity.text = data!!.city
-                myGender.text = data!!.gender
 
-                //이미지가져오기
-                val storageRef = Firebase.storage.reference.child(data.uid + ".png")
-                storageRef.downloadUrl.addOnCompleteListener({task ->
+                if (data != null) {
+                    myUid.text = data.uid
+                    myNickname.text = data.nickname
+                    myAge.text = data.age
+                    myCity.text = data.city
+                    myGender.text = data.gender
 
-                    if (task.isSuccessful) {
-                        Glide.with(baseContext)
-                            .load(task.result)
-                            .into(myImage)
+                    // 이미지 가져오기
+                    val storageRef = Firebase.storage.reference.child("${data.uid}.png")
+                    storageRef.downloadUrl.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Glide.with(baseContext)
+                                .load(task.result)
+                                .into(myImage)
+                        } else {
+                            // 이미지 다운로드 실패 시 처리
+                        }
                     }
-                })
-
+                } else {
+                    // data가 null인 경우에 대한 처리를 추가할 수 있습니다.
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -68,7 +73,7 @@ class MyPageActivity : AppCompatActivity() {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
             }
         }
-        //파이어베이스 안에 UID정보를 가져옴
         FirebaseRef.userInfoRef.child(uid).addValueEventListener(postListener)
+
     }
 }

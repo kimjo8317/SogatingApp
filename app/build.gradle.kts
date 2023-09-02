@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.cokchi.sogating_final"
-        minSdk = 24
+        minSdk = 21
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -99,7 +99,7 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
     //Notifucation 추가
-    implementation ("com.android.support:support-compat:28.0.0")
+    implementation ("androidx.core:core-ktx:1.7.0")
 
 
 
