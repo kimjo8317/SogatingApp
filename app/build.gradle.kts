@@ -100,6 +100,8 @@ dependencies {
 
     //Notifucation 추가
     implementation ("androidx.core:core-ktx:1.7.0")
+    implementation ("com.google.firebase:firebase-messaging-ktx")
+
 
 
 

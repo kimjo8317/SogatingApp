@@ -8,18 +8,23 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import com.cokchi.sogating_final.MainActivity
 import com.cokchi.sogating_final.R
 import com.cokchi.sogating_final.utils.FirebaseRef
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.ktx.storage
 import java.io.ByteArrayOutputStream
+import android.text.InputFilter
+import android.text.InputType
+import java.util.regex.Pattern
+
 
 class JoinActivity : AppCompatActivity() {
 
@@ -85,22 +90,38 @@ class JoinActivity : AppCompatActivity() {
                          val user = auth.currentUser
                         //(UID값)+모델값
                         uid = user?.uid.toString()
-                        val userModel = UserDataModel(
-                            uid,
-                            nickname,
-                            age,
-                            gender,
-                            city
-                        )
 
-                        //Utills FirebaseRef에서 가져오고(형식:uid,값) Model에서 각각의값을 가져와서 DB에추가
-                        FirebaseRef.userInfoRef.child(uid).setValue(userModel)
+                        //Token등록
+                        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                            OnCompleteListener { task ->
+                            if (!task.isSuccessful) {
+                                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                                return@OnCompleteListener
+                            }
 
-                        //회원가입이되면서 이미지를 업로드
-                        uploadImage(uid)
+                            // Get new FCM registration token
+                            val token = task.result
 
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                            // Log and toast
+                            Log.e(TAG, token.toString())
+                                val userModel = UserDataModel(
+                                    uid,
+                                    nickname,
+                                    age,
+                                    gender,
+                                    city,
+                                    token
+                                )
+
+                                //Utills FirebaseRef에서 가져오고(형식:uid,값) Model에서 각각의값을 가져와서 DB에추가
+                                FirebaseRef.userInfoRef.child(uid).setValue(userModel)
+
+                                //회원가입이되면서 이미지를 업로드
+                                uploadImage(uid)
+
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                        })
 
                     } else {
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)

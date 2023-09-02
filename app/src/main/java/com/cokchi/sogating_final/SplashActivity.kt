@@ -1,14 +1,14 @@
-package com.cokchi.sogating_final.auth
+package com.cokchi.sogating_final
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import com.cokchi.sogating_final.MainActivity
-import com.cokchi.sogating_final.R
+import com.cokchi.sogating_final.auth.IntroActivity
 import com.cokchi.sogating_final.utils.FirebaseAuthUtils
-import com.google.firebase.auth.FirebaseAuth
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 
 class SplashActivity : AppCompatActivity() {
 
@@ -19,6 +19,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         val uid = FirebaseAuthUtils.getUid()
+
 
         if (uid == "null") {
             Handler().postDelayed({
