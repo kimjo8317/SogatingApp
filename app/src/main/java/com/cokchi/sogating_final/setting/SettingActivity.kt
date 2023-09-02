@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.cokchi.sogating_final.R
 import com.cokchi.sogating_final.auth.IntroActivity
+import com.cokchi.sogating_final.message.MyLikeListActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -19,6 +20,12 @@ class SettingActivity : AppCompatActivity() {
         mybtn.setOnClickListener {
 
             val intent = Intent(this, MyPageActivity::class.java)
+            startActivity(intent)
+        }
+
+        val myLikeBtn = findViewById<Button>(R.id.myLikeList)
+        myLikeBtn.setOnClickListener {
+            val intent = Intent(this, MyLikeListActivity::class.java)
             startActivity(intent)
         }
 
