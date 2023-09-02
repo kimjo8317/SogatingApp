@@ -85,7 +85,6 @@ class JoinActivity : AppCompatActivity() {
             auth.createUserWithEmailAndPassword(emailArea.text.toString(), pwdArea.text.toString())
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
 
                          val user = auth.currentUser
                         //(UID값)+모델값
@@ -99,10 +98,8 @@ class JoinActivity : AppCompatActivity() {
                                 return@OnCompleteListener
                             }
 
-                            // Get new FCM registration token
                             val token = task.result
 
-                            // Log and toast
                             Log.e(TAG, token.toString())
                                 val userModel = UserDataModel(
                                     uid,
@@ -125,8 +122,6 @@ class JoinActivity : AppCompatActivity() {
 
                     } else {
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        // Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
-                        // updateUI(null)
                     }
                 }
         }
@@ -139,7 +134,6 @@ class JoinActivity : AppCompatActivity() {
         //저장장소지정
         val storageRef = storage.reference.child(uid + ".png")
 
-        // Get the data from an ImageView as bytes
         profileImage.isDrawingCacheEnabled = true
         profileImage.buildDrawingCache()
         val bitmap = (profileImage.drawable as BitmapDrawable).bitmap
@@ -149,10 +143,7 @@ class JoinActivity : AppCompatActivity() {
 
         var uploadTask = storageRef.putBytes(data)
         uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
         }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
         }
     }
 }

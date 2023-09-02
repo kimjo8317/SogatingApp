@@ -1,5 +1,9 @@
 *.iml
 .gradle
+/package com/cokchi/sogating_final/message/fcm/Repo.kt
+/package com/cokchi/sogating_final/message/fcm/NotiAPI.kt
+
+
 /local.properties
 /.idea/caches
 /.idea/libraries

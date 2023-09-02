@@ -1,4 +1,4 @@
-package com.bokchi.sogating_final.message
+package com.cokchi.sogating_final.message
 
 import android.content.Context
 import android.view.LayoutInflater

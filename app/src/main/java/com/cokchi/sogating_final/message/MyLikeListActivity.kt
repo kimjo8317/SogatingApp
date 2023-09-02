@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ListView
 import android.widget.Toast
-import com.bokchi.sogating_final.message.ListViewAdapter
+import com.cokchi.sogating_final.message.ListViewAdapter
 import com.cokchi.sogating_final.R
 import com.cokchi.sogating_final.auth.UserDataModel
 import com.cokchi.sogating_final.utils.FirebaseAuthUtils

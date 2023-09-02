@@ -84,8 +84,9 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.1.0")
 
     //파이어베이스추가
-    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation(platform("com.google.firebase:firebase-bom:30.3.2"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+
     //파이어베이스인증
     implementation("com.google.firebase:firebase-auth-ktx")
 
@@ -100,7 +101,12 @@ dependencies {
 
     //Notifucation 추가
     implementation ("androidx.core:core-ktx:1.7.0")
-    implementation ("com.google.firebase:firebase-messaging-ktx")
+    implementation ("com.google.firebase:firebase-messaging:23.0.4-ktx")
+
+    //앱에서 서버와의 통신을 쉽게 관리하기 위한 Retrofit 추가
+    implementation ("com.squareup.retrofit2:retrofit:(2.9.0)")
+    implementation ("com.squareup.retrofit2:converter-gson:2.2.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
 
 
